@@ -2,12 +2,12 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    es2021: true
+    es2021: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
@@ -22,12 +22,11 @@ module.exports = {
         beforeAll: 'readonly',
         afterAll: 'readonly',
         beforeEach: 'readonly',
-        afterEach: 'readonly'
-      }
-    }
+        afterEach: 'readonly',
+      },
+    },
   ],
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
-  }
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+  },
 };
-

@@ -21,8 +21,8 @@ describe('Sharp resizing utility', () => {
         width: inputWidth,
         height: inputHeight,
         channels: 3,
-        background: { r: 20, g: 20, b: 200 }
-      }
+        background: { r: 20, g: 20, b: 200 },
+      },
     })
       .png()
       .toFile(inputPath);
@@ -41,4 +41,3 @@ describe('Sharp resizing utility', () => {
     expect(metadata.height).toBe(height);
   });
 });
-

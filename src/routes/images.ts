@@ -2,11 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { Router, type Request, type Response } from 'express';
 import {
-  fileExists,
   getInputImagePath,
   getThumbFilename,
   getThumbPath,
-  resizeImage
+  resizeImage,
 } from '../utilities/imageProcessor';
 
 interface ImageResizeRequestBody {
@@ -48,7 +47,10 @@ const imagesRouter = Router();
 
 imagesRouter.post(
   '/images',
-  async (req: Request<{}, {}, unknown>, res: Response<ImageResizeResponseBody>) => {
+  async (
+    req: Request<Record<string, never>, ImageResizeResponseBody, unknown>,
+    res: Response<ImageResizeResponseBody>,
+  ) => {
     if (!isImageResizeRequestBody(req.body)) {
       res.status(400).json({ cached: false, thumbFilename: '' });
       return;
@@ -63,20 +65,20 @@ imagesRouter.post(
     // Ensure the cache directory exists.
     await fs.promises.mkdir(path.dirname(thumbPath), { recursive: true });
 
-    const inputExists = await fileExists(inputPath);
+    const inputExists = fs.existsSync(inputPath);
     if (!inputExists) {
       res.status(404).json({ cached: false, thumbFilename });
       return;
     }
 
-    const cached = await fileExists(thumbPath);
+    // Caching: check if the resized image already exists in assets/thumbs before processing.
+    const cached = fs.existsSync(thumbPath);
     if (!cached) {
       await resizeImage({ inputPath, outputPath: thumbPath, width, height });
     }
 
     res.status(200).json({ cached, thumbFilename });
-  }
+  },
 );
 
 export { imagesRouter };
-

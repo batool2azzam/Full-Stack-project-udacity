@@ -7,7 +7,7 @@ import {
   fileExists,
   getInputImagePath,
   getThumbFilename,
-  getThumbPath
+  getThumbPath,
 } from '../utilities/imageProcessor';
 
 interface ImageResizeResponseBody {
@@ -39,8 +39,8 @@ describe('Image resize API', () => {
         width: inputWidth,
         height: inputHeight,
         channels: 3,
-        background: { r: 0, g: 128, b: 0 }
-      }
+        background: { r: 0, g: 128, b: 0 },
+      },
     })
       .png()
       .toFile(inputPath);
@@ -50,7 +50,7 @@ describe('Image resize API', () => {
     const requestBody: { filename: string; width: number; height: number } = {
       filename,
       width,
-      height
+      height,
     };
 
     const response1 = await request(app)
@@ -85,4 +85,3 @@ describe('Image resize API', () => {
     expect(stat2.mtimeMs).toBe(stat1.mtimeMs);
   });
 });
-

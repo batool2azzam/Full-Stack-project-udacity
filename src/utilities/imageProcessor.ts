@@ -10,7 +10,7 @@ export function getThumbFilename(filename: string, width: number, height: number
 }
 
 export function getInputImagePath(filename: string): string {
-  return path.join(process.cwd(), 'assets', 'images', filename);
+  return path.join(process.cwd(), 'assets', 'full', filename);
 }
 
 export function getThumbPath(filename: string, width: number, height: number): string {
@@ -26,8 +26,9 @@ export type ResizeImageArgs = {
 };
 
 export async function resizeImage(args: ResizeImageArgs): Promise<void> {
-  // Use `fit: 'fill'` so output dimensions are exactly `width` x `height`.
-  await sharp(args.inputPath).resize(args.width, args.height, { fit: 'fill' }).toFile(args.outputPath);
+  await sharp(args.inputPath)
+    .resize(args.width, args.height, { fit: 'fill' })
+    .toFile(args.outputPath);
 }
 
 export async function fileExists(filePath: string): Promise<boolean> {
@@ -38,4 +39,3 @@ export async function fileExists(filePath: string): Promise<boolean> {
     return false;
   }
 }
-
